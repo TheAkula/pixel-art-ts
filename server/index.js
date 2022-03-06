@@ -14,9 +14,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
-app.use(
-  createProxyMiddleware(["/get-img/:id"], { target: "http://localhost:3001" })
-);
+// app.use(
+//   createProxyMiddleware(["/get-img/:id"], { target: "" })
+// );
 
 app.get("/get-img/:id", (req, res, next) => {
   const id = req.params.id;

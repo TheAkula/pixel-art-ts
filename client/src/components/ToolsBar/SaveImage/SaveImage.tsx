@@ -19,7 +19,7 @@ const SaveImage = () => {
   const [imgId, setImgId] = useState<null | string>(null);
 
   useEffect(() => {
-    const s = new WebSocket("ws://localhost:3001");
+    const s = new WebSocket("ws://");
     s.onopen = (e) => {
       console.log("connection");
     };
