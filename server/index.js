@@ -12,16 +12,15 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.resolve(__dirname, "../build")));
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 app.get("/get-img/:id", (req, res, next) => {
   const id = req.params.id;
-  console.log("something");
   res.download(`./images/${id}.png`);
 });
 
 app.get("*", (req, res, next) => {
-  res.send(path.resolve(__dirname, "../build", "index.html"));
+  res.send(path.resolve(__dirname, "../client/build", "index.html"));
 });
 
 const server = http.createServer(app);
