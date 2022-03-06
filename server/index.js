@@ -5,6 +5,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const ws = require("ws");
 const http = require("http");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const PORT = process.env.PORT || 3001;
 
@@ -13,6 +14,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
+app.use(
+  createProxyMiddleware(["/get-img/:id"], { target: "http://localhost:3001" })
+);
 
 app.get("/get-img/:id", (req, res, next) => {
   const id = req.params.id;
