@@ -16,7 +16,7 @@ app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 app.get("/get-img/:id", (req, res, next) => {
   const id = req.params.id;
-  res.download(`./images/${id}.png`);
+  res.download(path.join(__dirname, `./images/${id}.png`));
 });
 
 app.get("*", (req, res, next) => {
@@ -62,11 +62,12 @@ wss.on("connection", (ws) => {
 
     const id = uid();
 
-    const url = path.join("images", id + ".png");
+    const url = path.join(__dirname, "images", id + ".png");
     const buf = canvas.toBuffer();
 
     fs.writeFile(url, buf, (err) => {
       if (err) {
+        console.log("err");
         return console.log(err.message);
       }
       ws.send(JSON.stringify({ id: id }));
