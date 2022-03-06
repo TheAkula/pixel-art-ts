@@ -19,7 +19,7 @@ const SaveImage = () => {
   const [imgId, setImgId] = useState<null | string>(null);
 
   useEffect(() => {
-    const s = new WebSocket("ws://");
+    const s = new WebSocket("wss://pixel-art-ts.herokuapp.com/");
     s.onopen = (e) => {
       console.log("connection");
     };
