@@ -1,0 +1,11 @@
+.Board {
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  align-items: flex-start;
+}
+
+.BoardLine {
+  display: flex;
+}

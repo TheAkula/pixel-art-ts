@@ -1,0 +1,35 @@
+.Art {
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  background-color: #353535;
+  cursor: grab;
+  position: relative;
+}
+
+.Row {
+  display: flex;
+}
+
+.Button {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(158, 158, 158, 0.9);
+  border: none;
+  position: absolute;
+  cursor: pointer;
+}
+
+.DeleteButton {
+  right: 0;
+  top: 0;
+}
+
+.CopyButton {
+  right: 0;
+  bottom: 0;
+}
+
+.Button:hover {
+  background-color: rgba(97, 97, 97, 0.9);
+}

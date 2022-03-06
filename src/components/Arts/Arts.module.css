@@ -1,0 +1,14 @@
+.Arts {
+  display: flex;
+}
+
+.Wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.AddButton {
+  width: 40px;
+}

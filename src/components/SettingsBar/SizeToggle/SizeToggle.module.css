@@ -1,0 +1,29 @@
+.SizeToggle {
+  display: flex;
+  align-items: center;
+}
+
+.SizeToggleImg {
+  font-size: 40px;
+  margin-right: 10px;
+}
+
+.SizeCurrent {
+  width: 80px;
+  height: 80px;
+  font-size: 30px;
+  color: white;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Btn {
+  display: block;
+  width: 70px;
+  height: 40px;
+  background-color: #1b1b1b;
+  border: 1px solid white;
+  color: white;
+}

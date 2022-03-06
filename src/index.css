@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #636363;
+}
+
+.Container {
+  margin: 0 auto;
+  max-width: 1400px;
+}
