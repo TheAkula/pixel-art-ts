@@ -9,6 +9,7 @@ type ArtProps = {
   onDeleteArt: () => void;
   onCopyArt: () => void;
   isChosen: boolean;
+  defColor: string;
 } & ArtType;
 
 const art = (props: ArtProps) => {
@@ -62,7 +63,10 @@ const art = (props: ArtProps) => {
             <SimplePixel
               key={pix.ypos.toString() + pix.xpos}
               ps={ps}
-              pix={pix}
+              pix={{
+                ...pix,
+                color: pix.color === props.defColor ? "transparent" : pix.color,
+              }}
             />
           ))}
         </div>

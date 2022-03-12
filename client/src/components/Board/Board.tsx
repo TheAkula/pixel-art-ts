@@ -1,10 +1,7 @@
 import classes from "./Board.module.css";
 import createArt from "../../hoc/createArt";
-
-import { SettingsContext } from "../../context/settings-context";
 import { ArtsContext } from "../../context/arts-context";
 import {
-  DragEventHandler,
   MouseEventHandler,
   useContext,
   useEffect,
@@ -16,8 +13,8 @@ import { Art } from "../../context/arts-context";
 import Pixel from "./Pixel/Pixel";
 
 const Board = () => {
-  const { settings, settingsDispatch } = useContext(SettingsContext);
-  const { arts, artsDispatch } = useContext(ArtsContext)!;
+  const [isDraw, setIsDraw] = useState(false);
+  const { artsState, artsDispatch } = useContext(ArtsContext)!;
   const [draggedPixels, setDraggedPixels] = useState<null | {
     x: number;
     y: number;
@@ -25,57 +22,62 @@ const Board = () => {
   const boardRef = useRef(null);
 
   useEffect(() => {
-    if (arts.chosen === null) {
-      const rows = createArt(settings!);
+    if (artsState.chosen === null) {
+      const rows = createArt(artsState.settings!);
       artsDispatch({
         type: "ADD_ART",
         data: {
           rows: rows,
-          id: arts.arts.length,
+          id: artsState.arts.length,
         },
       });
     }
-  }, [artsDispatch, settings, arts]);
+  }, [artsDispatch, artsState.settings, artsState]);
 
-  const onDragEnd: EventListener = (e) => {
-    e.preventDefault();
-    setDraggedPixels(null);
-    document.removeEventListener("dragend", onDragEnd);
+  useEffect(() => {
+    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("dragstart", (e) => e.preventDefault());
+  }, []);
+
+  const onMouseDown = () => {
+    setIsDraw(true);
   };
 
-  const onDragStart: DragEventHandler = (e) => {
-    const clone = (e.target as HTMLElement).cloneNode(true);
-    (clone as HTMLElement).style.display = "none";
-    e.dataTransfer.setDragImage(clone as Element, 0, 0);
-    document.addEventListener("dragend", onDragEnd);
+  const onMouseUp = () => {
+    setIsDraw(false);
+    setDraggedPixels((prevDraggedPixels) => null);
   };
 
   const pixelClickedHandler = (xpos: number, ypos: number, color: string) => {
     return ((e) => {
       e.preventDefault();
 
-      switch (settings!.tool) {
+      switch (artsState.settings!.tool) {
         case "BRUSH":
+          if (color === artsState.settings!.color) return;
           artsDispatch({
             type: "SET_PIX",
-            artId: arts.chosen!,
-            data: settings!.color,
+            artId: artsState.chosen!,
+            data: artsState.settings!.color,
             x: xpos,
             y: ypos,
           });
           break;
         case "ERASER":
+          if (color === artsState.settings!.defColor) return;
           artsDispatch({
             type: "SET_PIX",
-            artId: arts.chosen!,
-            data: settings!.defColor,
+            artId: artsState.chosen!,
+            data: artsState.settings!.defColor,
             x: xpos,
             y: ypos,
           });
           break;
         case "FILL":
           const art: Art = JSON.parse(
-            JSON.stringify(arts.arts.find((art) => art.id === arts.chosen))
+            JSON.stringify(
+              artsState.arts.find((art) => art.id === artsState.chosen)
+            )
           );
           const fillPix = (x: number, y: number) => {
             const checkPix = (xp: number, yp: number): boolean => {
@@ -89,9 +91,9 @@ const Board = () => {
               const pix = art.rows[yp][xp];
               if (!pix) return false;
               const colorP = pix.color;
-              return colorP !== settings!.color && colorP === color;
+              return colorP !== artsState.settings!.color && colorP === color;
             };
-            art.rows[y][x].color = settings!.color;
+            art.rows[y][x].color = artsState.settings!.color;
 
             if (checkPix(x + 1, y)) {
               fillPix(x + 1, y);
@@ -107,10 +109,14 @@ const Board = () => {
             }
           };
           fillPix(xpos, ypos);
-          artsDispatch({ type: "UPD_ART", artId: arts.chosen!, data: art });
+          artsDispatch({
+            type: "UPD_ART",
+            artId: artsState.chosen!,
+            data: art,
+          });
           break;
         case "PIPETTE":
-          settingsDispatch!({ type: "SET_COLOR", data: color });
+          artsDispatch!({ type: "SET_COLOR", data: color });
           break;
         case "MOVE":
           let dragPix = draggedPixels;
@@ -138,7 +144,9 @@ const Board = () => {
             setDraggedPixels({ x: draggedPixels!.x, y: ypos });
           }
           const newArt = JSON.parse(
-            JSON.stringify(arts.arts.find((art) => art.id === arts.chosen))
+            JSON.stringify(
+              artsState.arts.find((art) => art.id === artsState.chosen)
+            )
           ) as Art;
           newArt.rows.forEach((row, ind) => {
             row.forEach((pix) => {
@@ -179,7 +187,7 @@ const Board = () => {
           artsDispatch({
             type: "UPD_ART",
             data: newArt,
-            artId: arts.chosen!,
+            artId: artsState.chosen!,
           });
           break;
         default:
@@ -190,20 +198,21 @@ const Board = () => {
 
   let art: null | Art = null;
 
-  if (arts.arts.length) {
-    art = arts.arts!.find((art) => art.id === arts.chosen)!;
+  if (artsState.arts.length) {
+    art = artsState.arts!.find((art) => art.id === artsState.chosen)!;
   }
 
-  const ps = 600 / settings!.columnSize;
+  const ps = 500 / artsState.settings!.columnSize;
   return (
     <div ref={boardRef} className={classes.Board}>
       {art &&
         art.rows.map((arr) => {
           return arr.map((pixel) => (
             <Pixel
+              isDrawing={isDraw}
               size={ps}
               clicked={pixelClickedHandler}
-              dragStarted={onDragStart}
+              dragStarted={onMouseDown}
               key={pixel.ypos.toString() + pixel.xpos}
               {...pixel}
             />

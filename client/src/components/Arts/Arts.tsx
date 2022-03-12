@@ -5,30 +5,28 @@ import artClasses from "./Art/Art.module.css";
 import Art from "./Art/Art";
 
 import { ArtsContext } from "../../context/arts-context";
-import { SettingsContext } from "../../context/settings-context";
 
 import createArt from "../../hoc/createArt";
 
-interface ArtsProps {}
-
-const Arts = (props: ArtsProps) => {
-  const { arts, artsDispatch } = useContext(ArtsContext)!;
-  const { settings } = useContext(SettingsContext);
+const Arts = () => {
+  const { artsState, artsDispatch } = useContext(ArtsContext)!;
 
   const artClickedHandler = (id: number) => {
     return ((e) => {
-      if ((e.target as HTMLElement).classList.contains(artClasses.Art))
+      const target = e.target as HTMLElement;
+      if (target.closest("." + artClasses.Art) && !target.closest("button")) {
         artsDispatch({ type: "SET_CHOSEN", data: id });
+      }
     }) as MouseEventHandler;
   };
 
   const onAddedArt = () => {
-    const rows = createArt(settings!);
+    const rows = createArt(artsState.settings!);
     artsDispatch({
       type: "ADD_ART",
       data: {
         rows: rows,
-        id: arts.arts.length,
+        id: artsState.arts.length,
       },
     });
   };
@@ -38,7 +36,6 @@ const Arts = (props: ArtsProps) => {
   };
 
   const onCopyArt = (id: number) => () => {
-    // const copiedArt = arts.arts.find(art => art.id === id);
     artsDispatch({ type: "COPY_ART", data: id });
   };
 
@@ -48,14 +45,15 @@ const Arts = (props: ArtsProps) => {
         +
       </button>
       <div className={classes.Wrapper}>
-        {arts.arts.map((art) => (
+        {artsState.arts.map((art) => (
           <Art
-            isChosen={arts.chosen === art.id}
+            isChosen={artsState.chosen === art.id}
             onCopyArt={onCopyArt(art.id)}
             onDeleteArt={onDeleteArt(art.id)}
             key={art.id}
             {...art}
             clicked={artClickedHandler(art.id)}
+            defColor={artsState.settings.defColor}
           />
         ))}
       </div>

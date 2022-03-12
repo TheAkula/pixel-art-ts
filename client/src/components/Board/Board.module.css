@@ -1,5 +1,5 @@
 .Board {
-  max-width: 600px;
+  max-width: 500px;
   display: flex;
   flex-wrap: wrap;
   height: 100%;

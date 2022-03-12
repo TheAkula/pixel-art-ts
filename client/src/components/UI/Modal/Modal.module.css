@@ -1,0 +1,45 @@
+.Modal {
+  width: 95vw;
+  height: 95vh;
+  z-index: 20;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.Background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(128, 128, 128, 0.8);
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+}
+
+.CloseButton {
+  background-color: rgb(190, 20, 20);
+  color: white;
+  display: block;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ModalHead {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.ModalContent {
+  height: 80%;
+  overflow-y: auto;
+}

@@ -1,14 +1,15 @@
 import classes from "./Pixel.module.css";
 
-import { DragEventHandler, MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 
 interface PixelProps {
   xpos: number;
   ypos: number;
   clicked: (a: number, b: number, c: string) => MouseEventHandler;
-  dragStarted: DragEventHandler;
+  dragStarted: MouseEventHandler;
   size: number;
   color: string;
+  isDrawing: boolean;
 }
 
 const Pixel = (props: PixelProps) => {
@@ -19,9 +20,12 @@ const Pixel = (props: PixelProps) => {
         width: props.size,
         height: props.size,
       }}
-      draggable={true}
-      onDragEnter={props.clicked(props.xpos, props.ypos, props.color)}
-      onDragStart={props.dragStarted}
+      onMouseEnter={
+        props.isDrawing
+          ? props.clicked(props.xpos, props.ypos, props.color)
+          : () => {}
+      }
+      onMouseDown={props.dragStarted}
       onClick={props.clicked(props.xpos, props.ypos, props.color)}
       className={classes.Pixel}
     ></div>

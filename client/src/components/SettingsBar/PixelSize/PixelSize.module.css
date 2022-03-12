@@ -1,0 +1,25 @@
+.PixelSize {
+  border: 3px solid #bbb;
+  margin-top: 10px;
+}
+
+.PixelSize p {
+  background-color: #313131;
+  text-align: center;
+  color: #bbb;
+  font-size: 1em;
+  border-bottom: 3px solid #bbb;
+  padding: 10px 0;
+}
+
+.PixelSize input {
+  color: #bbb;
+  text-align: center;
+  background-color: #4b4949;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  height: 40px;
+  font-size: 1em;
+}

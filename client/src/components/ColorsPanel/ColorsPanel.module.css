@@ -1,4 +1,4 @@
 .ColorsPanel {
   display: grid;
-  grid-template-columns: repeat(4, 40px);
+  grid-template-columns: repeat(6, 40px);
 }

@@ -1,4 +1,11 @@
 .ColorPick {
   width: 40px;
   height: 40px;
+  border: none;
+  display: block;
+  border: 3px solid #636363;
+}
+
+.active {
+  border: 3px solid #bbb;
 }

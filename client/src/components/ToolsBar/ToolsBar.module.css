@@ -1,48 +1,66 @@
 .ToolsBar {
-  background-color: #363636;
-  width: 200px;
-  height: 300px;
   padding: 20px;
-  border-radius: 10px;
   display: grid;
-  grid-template-columns: repeat(2, auto);
-  justify-content: space-between;
+  gap: 20px;
+  grid-template-columns: repeat(3, auto);
 }
 
 .Tool {
   display: block;
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+  width: 50px;
+  height: 50px;
   background-color: inherit;
   background-position: center;
-  background-size: 40px;
+  background-size: 30px;
   background-repeat: no-repeat;
   border: none;
-  padding: 10px;
+  padding: 20px;
 }
 
-.Tool:hover,
+.Tool::-webkit-color-swatch-wrapper {
+  display: none;
+}
+
 .Tool.active {
-  background-color: #242424;
+  background-color: #313131;
 }
 
 .Brush {
-  background-image: url("https://www.svgrepo.com/show/90895/paintbrush.svg");
+  background-image: url("../../assets/images/paintbrush.png");
+}
+
+.Brush.active {
+  background-image: url("../../assets/images/paintbrush\ \(1\).png");
 }
 
 .Eraser {
-  background-image: url("http://cdn.onlinewebfonts.com/svg/img_468470.png");
+  background-image: url("../../assets/images/eraser.png");
+}
+
+.Eraser.active {
+  background-image: url("../../assets/images/eraser.png");
 }
 
 .Fill {
-  background-image: url("https://icon-library.com/images/fill-icon/fill-icon-2.jpg");
+  background-image: url("../../assets/images/premium-icon-fill-color-2708426.png");
+}
+
+.Fill.active {
+  background-image: url("../../assets/images/premium-icon-fill-color-4733826.png");
 }
 
 .Pipette {
-  background-image: url("https://www.svgrepo.com/show/308810/pipette-liquid-color-laboratory-tool.svg");
+  background-image: url("../../assets/images/free-icon-eyedropper-483438.png");
+}
+
+.Pipette.active {
+  background-image: url("../../assets/images/free-icon-eyedropper-481979.png");
 }
 
 .Move {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Feather-core-move.svg/1200px-Feather-core-move.svg.png");
+  background-image: url("../../assets/images/move.png");
+}
+
+.Move.active {
+  background-image: url("../../assets/images/move\ \(1\).png");
 }

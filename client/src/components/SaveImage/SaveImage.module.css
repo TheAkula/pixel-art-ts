@@ -1,0 +1,22 @@
+.DownloadButton {
+  background-color: rgb(245, 55, 55);
+  padding: 20px;
+  display: block;
+  color: #bbb;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.ArtRow {
+  display: flex;
+}
+
+.ImgContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 40px auto;
+}

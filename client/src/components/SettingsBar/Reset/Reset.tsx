@@ -1,14 +1,16 @@
-import { MouseEventHandler } from "react";
 import classes from "./Reset.module.css";
+import Button from "../../UI/Button/Button";
 
 interface ResetProps {
-  clicked: MouseEventHandler;
+  clicked: () => void;
 }
 
 const reset = (props: ResetProps) => {
   return (
     <div className={classes.Reset}>
-      <button onClick={props.clicked}>RESET</button>
+      <Button clicked={props.clicked} type="button">
+        RESET
+      </Button>
     </div>
   );
 };

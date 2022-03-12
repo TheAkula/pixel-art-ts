@@ -4,26 +4,38 @@
 }
 
 .SizeToggleImg {
-  font-size: 40px;
+  font-size: 35px;
+  color: #bbb;
   margin-right: 10px;
 }
 
+.BtnBlock {
+  border: 3px solid #bbb;
+}
+
 .SizeCurrent {
-  width: 80px;
-  height: 80px;
-  font-size: 30px;
-  color: white;
-  border: 1px solid white;
+  width: 70px;
+  height: 76px;
+  font-size: 1.5em;
+  color: #bbb;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid #bbb;
+  border-right: none;
+  background-color: #4b4949;
 }
 
 .Btn {
   display: block;
   width: 70px;
-  height: 40px;
-  background-color: #1b1b1b;
-  border: 1px solid white;
-  color: white;
+  height: 35px;
+  background-color: #313131;
+  font-size: 1em;
+  color: #bbb;
+  border: none;
+}
+
+.Btn:nth-child(1) {
+  border-bottom: 3px solid #bbb;
 }
