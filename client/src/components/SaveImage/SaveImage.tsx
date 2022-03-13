@@ -91,7 +91,11 @@ const SaveImage = () => {
             </div>
           ))}
         </div>
-        <button className={classes.DownloadButton} onClick={onDownloadImg}>
+        <button
+          type="button"
+          className={classes.DownloadButton}
+          onClick={onDownloadImg}
+        >
           DOWNLOAD
         </button>
       </Modal>

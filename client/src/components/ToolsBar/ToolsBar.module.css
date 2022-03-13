@@ -24,3 +24,43 @@
 .Tool.active {
   background-color: #313131;
 }
+
+.Brush {
+  background-image: url("../../assets/images/paintbrush.png");
+}
+
+.Brush.active {
+  background-image: url("../../assets/images/paintbrush\ \(1\).png");
+}
+
+.Eraser {
+  background-image: url("../../assets/images/eraser.png");
+}
+
+.Eraser.active {
+  background-image: url("../../assets/images/eraser.png");
+}
+
+.Fill {
+  background-image: url("../../assets/images/premium-icon-fill-color-2708426.png");
+}
+
+.Fill.active {
+  background-image: url("../../assets/images/premium-icon-fill-color-4733826.png");
+}
+
+.Pipette {
+  background-image: url("../../assets/images/free-icon-eyedropper-483438.png");
+}
+
+.Pipette.active {
+  background-image: url("../../assets/images/free-icon-eyedropper-481979.png");
+}
+
+.Move {
+  background-image: url("../../assets/images/move.png");
+}
+
+.Move.active {
+  background-image: url("../../assets/images/move\ \(1\).png");
+}

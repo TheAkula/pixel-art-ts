@@ -1,14 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.4fdd80da.css",
-    "main.js": "/static/js/main.d1c7eb30.js",
+    "main.css": "/static/css/main.b9fc5820.css",
+    "main.js": "/static/js/main.f773e407.js",
+    "static/media/paintbrush (1).png": "/static/media/paintbrush (1).a06191c6f85decbdcd9d.png",
+    "static/media/free-icon-eyedropper-481979.png": "/static/media/free-icon-eyedropper-481979.e12dce033c2a52b941b9.png",
+    "static/media/move (1).png": "/static/media/move (1).c5f9ca79580ee72d6a36.png",
     "static/media/MinecraftRegular-Bmg3.otf": "/static/media/MinecraftRegular-Bmg3.82ba08919dc2add9422f.otf",
+    "static/media/paintbrush.png": "/static/media/paintbrush.c363b3d919b31c8a6ed3.png",
+    "static/media/free-icon-eyedropper-483438.png": "/static/media/free-icon-eyedropper-483438.6fb265017ffa7a31a32e.png",
     "index.html": "/index.html",
-    "main.4fdd80da.css.map": "/static/css/main.4fdd80da.css.map",
-    "main.d1c7eb30.js.map": "/static/js/main.d1c7eb30.js.map"
+    "main.b9fc5820.css.map": "/static/css/main.b9fc5820.css.map",
+    "main.f773e407.js.map": "/static/js/main.f773e407.js.map"
   },
   "entrypoints": [
-    "static/css/main.4fdd80da.css",
-    "static/js/main.d1c7eb30.js"
+    "static/css/main.b9fc5820.css",
+    "static/js/main.f773e407.js"
   ]
 }
