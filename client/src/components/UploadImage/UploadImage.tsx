@@ -2,9 +2,9 @@ import {
   FormEventHandler,
   MouseEventHandler,
   useContext,
-  useEffect,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import axios from "axios";
 
@@ -23,11 +23,13 @@ const UploadImage = () => {
   const [newPixelSize, setNewPixelSize] = useState(1);
   const [origSize, setOrigSize] = useState({ a: 0, b: 0 });
   const [frameSize, setFrameSize] = useState({ a: 0, b: 0 });
-  const [imgData, setImgData] = useState<null | HTMLImageElement>(null);
   const fileInpRef = useRef<null | HTMLInputElement>(null);
   const imgRef = useRef<null | HTMLImageElement>(null);
 
-  useEffect(() => {}, [imgData]);
+  useEffect(() => {
+    if (showModal) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [showModal]);
 
   const onSubmitHandler: FormEventHandler = (e) => {
     e.preventDefault();
@@ -78,8 +80,8 @@ const UploadImage = () => {
 
   const onChosedFile = () => {
     setFile(window.URL.createObjectURL(fileInpRef.current!.files![0]));
-    const img = document.createElement("img");
-    img.src = window.URL.createObjectURL(fileInpRef.current!.files![0]);
+    setOrigSize({ a: 0, b: 0 });
+    setFrameSize({ a: 0, b: 0 });
   };
 
   const onAddPixelSize: MouseEventHandler = () => {

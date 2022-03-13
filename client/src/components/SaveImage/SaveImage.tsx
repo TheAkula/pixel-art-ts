@@ -16,12 +16,16 @@ const SaveImage = () => {
   const [showModal, setShowModal] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
 
+  useEffect(() => {
+    if (showModal) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [showModal]);
+
   const onSaveImage: FormEventHandler = (e) => {
     e.preventDefault();
     const s = new WebSocket("wss://pixel-art-ts.herokuapp.com");
     s.onopen = (e) => {
       const art = artsState.arts.find((art) => art.id === artsState.chosen)!;
-      console.log("ws connection");
       s.send(
         JSON.stringify({
           type: "CREATE_IMG",
@@ -51,9 +55,6 @@ const SaveImage = () => {
         .catch((err) => {
           s.close();
         });
-    };
-    s.onclose = () => {
-      console.log("close ws");
     };
   };
 
