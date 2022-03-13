@@ -13,15 +13,25 @@ import Button from "../UI/Button/Button";
 
 const SaveImage = () => {
   const { artsState } = useContext(ArtsContext)!;
-  const socket = useRef<null | WebSocket>(null);
   const [showModal, setShowModal] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
 
-  useEffect(() => {
+  const onSaveImage: FormEventHandler = (e) => {
+    e.preventDefault();
     const s = new WebSocket("wss://pixel-art-ts.herokuapp.com");
-    const startTime = Date.now();
     s.onopen = (e) => {
+      const art = artsState.arts.find((art) => art.id === artsState.chosen)!;
       console.log("ws connection");
+      s.send(
+        JSON.stringify({
+          type: "CREATE_IMG",
+          img: art,
+          ps: artsState.settings.pixelSize,
+          cs: artsState.settings.columnSize,
+          rs: artsState.settings.rowSize,
+          dc: artsState.settings.defColor,
+        })
+      );
     };
     s.onmessage = function (e) {
       const id = JSON.parse(e.data).id;
@@ -36,29 +46,15 @@ const SaveImage = () => {
           const blob = new Blob([data]);
           const url = window.URL.createObjectURL(blob);
           setImgUrl(url);
+          s.close();
         })
-        .catch((err) => {});
+        .catch((err) => {
+          s.close();
+        });
     };
     s.onclose = () => {
       console.log("close ws");
-      console.log((Date.now() - startTime) / 1000);
     };
-    socket.current = s;
-  }, []);
-
-  const onSaveImage: FormEventHandler = (e) => {
-    e.preventDefault();
-    const art = artsState.arts.find((art) => art.id === artsState.chosen)!;
-    socket.current!.send(
-      JSON.stringify({
-        type: "CREATE_IMG",
-        img: art,
-        ps: artsState.settings.pixelSize,
-        cs: artsState.settings.columnSize,
-        rs: artsState.settings.rowSize,
-        dc: artsState.settings.defColor,
-      })
-    );
   };
 
   const onCloseModal = () => {
