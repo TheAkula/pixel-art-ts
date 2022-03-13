@@ -27,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://pixel-art-ts.herokuapp.com/",
+  "proxy": "https://pixel-art-ts.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",

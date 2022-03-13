@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const ws = require("ws");
 const http = require("http");
 const multer = require("multer");
-const upload = multer({ dest: path.join(__dirname, "uploads") });
+const upload = multer({ dest: path.join(__dirname) });
 const Jimp = require("jimp");
 
 const PORT = process.env.PORT || 3001;
@@ -18,14 +18,14 @@ app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 app.get("/get-img/:id", (req, res, next) => {
   const id = req.params.id.split("-");
-  res.download(path.join(__dirname, `./images/${id[0]}/${id[1]}.png`));
+  res.download(path.join(__dirname, `./${id[0]}/${id[1]}.png`));
 });
 
 app.post("/upl-img", upload.single("img"), (req, res, next) => {
   const fileName = req.file.filename;
   const ps = +req.body.ps;
   const defColor = req.body.dc;
-  Jimp.read(path.join(__dirname, "uploads", fileName))
+  Jimp.read(path.join(__dirname, fileName))
     .then((img) => {
       const art = [];
       const cs = img.getWidth() / ps;
@@ -51,7 +51,7 @@ app.post("/upl-img", upload.single("img"), (req, res, next) => {
         art.push(row);
       }
       res.json(art);
-      fs.unlink(path.join(__dirname, "uploads", fileName), (err) => {});
+      fs.unlink(path.join(__dirname, fileName), (err) => {});
     })
     .catch((err) => {});
 });
@@ -70,7 +70,7 @@ const uid = function () {
 
 wss.on("connection", (ws) => {
   const dirName = uid();
-  fs.mkdirSync(path.join(__dirname, "images", dirName));
+  fs.mkdirSync(path.join(__dirname, dirName));
   ws.on("message", (data) => {
     const artData = JSON.parse(data);
 
@@ -97,7 +97,7 @@ wss.on("connection", (ws) => {
 
     const id = uid();
 
-    const url = path.join(__dirname, "images", dirName, id + ".png");
+    const url = path.join(__dirname, dirName, id + ".png");
     const buf = canvas.toBuffer();
     fs.writeFile(url, buf, (err) => {
       if (err) {
@@ -108,13 +108,13 @@ wss.on("connection", (ws) => {
   });
 
   ws.on("close", (c, r) => {
-    fs.readdir(path.join(__dirname, "images", dirName), (err, files) => {
+    fs.readdir(path.join(__dirname, dirName), (err, files) => {
       if (err) return;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        fs.unlinkSync(path.join(__dirname, "images", dirName, file));
+        fs.unlinkSync(path.join(__dirname, dirName, file));
       }
-      fs.rmdir(path.join(__dirname, "images", dirName), (err) => {
+      fs.rmdir(path.join(__dirname, dirName), (err) => {
         if (err) {
         }
       });
