@@ -19,6 +19,7 @@ const SaveImage = () => {
 
   useEffect(() => {
     const s = new WebSocket("wss://pixel-art-ts.herokuapp.com");
+    const startTime = Date.now();
     s.onopen = (e) => {
       console.log("ws connection");
     };
@@ -40,6 +41,7 @@ const SaveImage = () => {
     };
     s.onclose = () => {
       console.log("close ws");
+      console.log((Date.now() - startTime) / 1000);
     };
     socket.current = s;
   }, []);
