@@ -2,6 +2,7 @@ import {
   FormEventHandler,
   MouseEventHandler,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -17,13 +18,16 @@ const UploadImage = () => {
   const { artsState, artsDispatch } = useContext(ArtsContext)!;
   const [showModal, setShowModal] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [haveFile, setHaveFile] = useState(false);
+  const [file, setFile] = useState<null | string>(null);
   const [imgIsValid, setImgIsValid] = useState(false);
   const [newPixelSize, setNewPixelSize] = useState(1);
   const [origSize, setOrigSize] = useState({ a: 0, b: 0 });
   const [frameSize, setFrameSize] = useState({ a: 0, b: 0 });
+  const [imgData, setImgData] = useState<null | HTMLImageElement>(null);
   const fileInpRef = useRef<null | HTMLInputElement>(null);
   const imgRef = useRef<null | HTMLImageElement>(null);
+
+  useEffect(() => {}, [imgData]);
 
   const onSubmitHandler: FormEventHandler = (e) => {
     e.preventDefault();
@@ -52,7 +56,7 @@ const UploadImage = () => {
   const onCloseModal = () => {
     setShowModal(false);
     setIsSelected(false);
-    setHaveFile(false);
+    setFile(null);
   };
 
   const onBrowseImg = () => {
@@ -60,36 +64,42 @@ const UploadImage = () => {
     setIsSelected(true);
   };
 
-  const validateSize = () => {
+  const validateSize = (s: number) => {
     const width = imgRef.current?.offsetWidth!;
     const height = imgRef.current?.offsetHeight!;
-    const frameWidth = width / newPixelSize;
-    const frameHeight = height / newPixelSize;
+    const frameWidth = width / s;
+    const frameHeight = height / s;
     let valid = true;
-    valid = valid && width % newPixelSize === 0;
-    valid = valid && height % newPixelSize === 0;
+    valid = valid && width % s === 0;
+    valid = valid && height % s === 0;
     setFrameSize({ a: frameWidth, b: frameHeight });
     setImgIsValid(valid);
   };
 
   const onChosedFile = () => {
-    setHaveFile(fileInpRef.current!.files!.length > 0);
+    setFile(window.URL.createObjectURL(fileInpRef.current!.files![0]));
+    const img = document.createElement("img");
+    img.src = window.URL.createObjectURL(fileInpRef.current!.files![0]);
   };
 
   const onAddPixelSize: MouseEventHandler = () => {
     setNewPixelSize((prevPixelSize) => prevPixelSize + 1);
+    validateSize(newPixelSize + 1);
   };
 
   const onSubPixelSize: MouseEventHandler = () => {
     setNewPixelSize((prevPixelSize) => prevPixelSize - 1 || 1);
+    validateSize(newPixelSize - 1 || 1);
   };
 
-  const imgOnLoad = () => {
-    setOrigSize({
-      a: imgRef.current?.offsetWidth!,
-      b: imgRef.current?.offsetHeight!,
-    });
-    validateSize();
+  const imgOnLoad: React.ReactEventHandler<HTMLImageElement> = (e) => {
+    if (!origSize.a || !origSize.b) {
+      setOrigSize({
+        a: (e.target as HTMLImageElement).width,
+        b: (e.target as HTMLImageElement).height,
+      });
+      validateSize(newPixelSize);
+    }
   };
 
   return (
@@ -116,17 +126,10 @@ const UploadImage = () => {
               style={{ display: "none" }}
               ref={fileInpRef}
             />
-            {isSelected && haveFile ? (
+            {isSelected && file ? (
               <>
                 <div className={classes.ImgContainer}>
-                  <img
-                    src={window.URL.createObjectURL(
-                      fileInpRef.current!.files![0]
-                    )}
-                    alt=""
-                    ref={imgRef}
-                    onLoad={imgOnLoad}
-                  />
+                  <img src={file} onLoad={imgOnLoad} alt="" ref={imgRef} />
                 </div>
                 <div className={classes.LoadPlace}>
                   <p style={{ textAlign: "center", marginBottom: "10px" }}>
