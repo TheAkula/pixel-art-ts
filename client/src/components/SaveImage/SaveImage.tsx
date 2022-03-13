@@ -19,7 +19,9 @@ const SaveImage = () => {
 
   useEffect(() => {
     const s = new WebSocket("wss://pixel-art-ts.herokuapp.com");
-    s.onopen = (e) => {};
+    s.onopen = (e) => {
+      console.log("ws connection");
+    };
     s.onmessage = function (e) {
       const id = JSON.parse(e.data).id;
       fetch("/get-img/" + id, {
@@ -35,6 +37,9 @@ const SaveImage = () => {
           setImgUrl(url);
         })
         .catch((err) => {});
+    };
+    s.onclose = () => {
+      console.log("close ws");
     };
     socket.current = s;
   }, []);
