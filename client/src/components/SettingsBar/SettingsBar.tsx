@@ -14,7 +14,7 @@ import Duration from "./Duration/Duration";
 import PixelSize from "./PixelSize/PixelSize";
 
 const SettingsBar = () => {
-  const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState<number | string>(1);
   const { artsState, artsDispatch } = useContext(ArtsContext)!;
 
   const onAddRow: MouseEventHandler = (e) => {
@@ -57,7 +57,7 @@ const SettingsBar = () => {
   };
 
   const durationChangedHandler: ChangeEventHandler = (e) => {
-    setDuration(+(e.target as HTMLInputElement).value);
+    setDuration((e.target as HTMLInputElement).value);
   };
 
   const pixelSizeChangedHandler: ChangeEventHandler = (e) => {

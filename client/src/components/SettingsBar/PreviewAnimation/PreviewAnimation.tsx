@@ -6,7 +6,7 @@ import SimplePixel from "../../SimplePixel/SimplePixel";
 import { Art, ArtsContext } from "../../../context/arts-context";
 
 interface PreviewAnimationProps {
-  duration: number;
+  duration: number | string;
 }
 
 const PreviewAnimation = (props: PreviewAnimationProps) => {
@@ -36,8 +36,10 @@ const PreviewAnimation = (props: PreviewAnimationProps) => {
   useEffect(() => {
     if (play) {
       if (timer.current === null) {
-        setArtToShow(artsState.arts[0]);
-        timer.current = setInterval(updateArtToShow, props.duration * 1000);
+        if (!isNaN(+props.duration)) {
+          setArtToShow(artsState.arts[0]);
+          timer.current = setInterval(updateArtToShow, +props.duration * 1000);
+        }
       }
     } else if (timer.current !== null) {
       clearInterval(timer.current);

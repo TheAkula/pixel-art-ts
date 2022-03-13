@@ -3,7 +3,7 @@ import classes from "./Duration.module.css";
 
 interface DurationProps {
   changed: ChangeEventHandler;
-  curDur: number;
+  curDur: number | string;
 }
 
 const duration = (props: DurationProps) => {
